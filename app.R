@@ -1,25 +1,9 @@
 # Carga la biblioteca de shiny
 library(shiny)
-# Crea un vector llamado ventas con estos días e importes: lunes 100, martes 150, miércoles 120, jueves 180 y viernes 220.
-ventas <- c(180, 140, 135, 210, 220)
-dias <- c("Lunes", "Martes", "Miércoles", "Jueves", "Viernes")
-# Calcula el porcentaje de ventas de cada día y guarda el resultado en porcentajes.
-porcentajes <- round(ventas / sum(ventas) * 100, 2)
-# Crea un vector llamado etiquetas con los días de lunes a viernes y sus porcentajes con un decimal y el signo %.
-etiquetas <- paste(dias, porcentajes, "%", sep = ": ")
-# Crea un vector llamado colores con "skyblue", "plum", "lightgreen", "pink" y "gold", en ese orden.
-colores <- c("skyblue", "purple", "lavender", "royalblue", "violet")
-# Crea la pantalla de Shiny llamada ui con fluidPage() y coloca dentro plotOutput("grafica_circular").
+ventas <- c(Lunes = 100, Martes = 150, Miércoles = 120, Jueves = 180, Viernes = 220)
+barplot(ventas,
+        main = "Ventas de la papelería",
+        xlab = "Día de la semana",
+        ylab = "Ventas en pesos",
+        col = "pink")
 
-ui <- fluidPage(
-  plotOutput("grafica_circular")
-)
-# Crea el server de Shiny y usa renderPlot() para mostrar output$grafica_circular.
-# Dibuja las ventas con pie(), usa etiquetas y colores, y pon el título "Ventas de la papelería".
-server <- function(input, output) {
-  output$grafica_circular <- renderPlot({
-    pie(ventas, labels = etiquetas, col = colores, main = "Ventas de la papelería")
-  })
-}
-# Inicia la aplicación Shiny usando ui y server
-shinyApp(ui = ui, server = server)
